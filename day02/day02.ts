@@ -4,18 +4,20 @@ import { readFileLines } from '../utils';
 
 
 
-export const parseInput = (inputFile: string): [string, string][] => readFileLines(inputFile).map(elem => [elem.split(" ")[0], elem.split(" ")[1]])
+export const parseInput = (inputFile: string): [string, number][] =>
+    readFileLines(inputFile)
+    .map(elem => [elem.split(" ")[0], elem.split(" ")[1]])
+    .map(tuple => [tuple[0], Number(tuple[1])])
 
 
-const lines: [string, string][] = parseInput(`${__dirname}/input02-p1.txt`);
+const lines: [string, number][] = parseInput(`${__dirname}/input02-p1.txt`);
 
 
-function part1(inpt: [string, string][]): number {
+function part1(inpt: [string, number][]): number {
     let hori: number = 0
     let verti: number = 0
 
-    for (const [i, j] of inpt) {
-        let value: number = Number(j)
+    for (const [i, value] of inpt) {
         if (i == "forward") {
             hori += value
         }
@@ -30,13 +32,12 @@ function part1(inpt: [string, string][]): number {
     return hori * verti
 }
 
-function part2(inpt: [string, string][]): number {
+function part2(inpt: [string, number][]): number {
     let hori: number = 0
     let verti: number = 0
     let aim = 0
 
-    for (const [i, j] of inpt) {
-        let value: number = Number(j)
+    for (const [i, value] of inpt) {
         if (i == "forward") {
             hori += value
             verti += value * aim
