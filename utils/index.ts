@@ -30,3 +30,8 @@ export const count = (inpt: string): { [key: string]: number } => {
 
   return counts;
 }
+
+export const range = (low: number, high: number): number[] => {
+    let val = Array.from(Array(Math.max(low, high) - Math.min(low, high) + 1).keys()).map(x => x + Math.min(low, high));
+    return low < high ? val : val.reverse()
+}
