@@ -19,3 +19,14 @@ export const splitByEmptyLine = (filePath: string): string[][] => readFile(fileP
   .replace(/\r/g, "\n")
   .split(/\n{2,}/g)
   .map((lines) => lines.split('\n'));
+
+export const count = (inpt: string): { [key: string]: number } => {
+  const counts = {};
+
+  for (let i = 0; i < inpt.length; i++) {
+    let num = inpt[i]
+    counts[num] = counts[num] ? counts[num] + 1 : 1;
+  }
+
+  return counts;
+}
