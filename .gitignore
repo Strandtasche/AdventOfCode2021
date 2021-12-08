@@ -1,5 +1,6 @@
 # generated js files
 *.js
+*.js.map
 
 # Logs
 logs
