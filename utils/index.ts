@@ -20,7 +20,7 @@ export const splitByEmptyLine = (filePath: string): string[][] => readFile(fileP
   .split(/\n{2,}/g)
   .map((lines) => lines.split('\n'));
 
-export const count = (inpt: string): { [key: string]: number } => {
+export const count = (inpt: string | number[]): { [key: string | number]: number } => {
   const counts = {};
 
   for (let i = 0; i < inpt.length; i++) {
@@ -34,4 +34,15 @@ export const count = (inpt: string): { [key: string]: number } => {
 export const range = (low: number, high: number): number[] => {
     let val = Array.from(Array(Math.max(low, high) - Math.min(low, high) + 1).keys()).map(x => x + Math.min(low, high));
     return low < high ? val : val.reverse()
+}
+
+export const tuple_includes = (arr: [number, number][], elem: [number, number]): boolean => {
+    for (let t of arr){
+        if (t[0] == elem[0]){
+            if (t[1] == elem[1]) {
+                return true
+            }
+        }
+    }
+    return false
 }
