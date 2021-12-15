@@ -1,5 +1,6 @@
 from collections import Counter
 from collections import defaultdict
+import time
 
 def part1(lines):
     inpt = lines[0]
@@ -68,4 +69,7 @@ if __name__ == "__main__":
         lines = fp.read().split("\n")
 
     # print(part1(lines))
+    start = time.time()
     print(part2(lines))
+    end = time.time()
+    print(end - start)
