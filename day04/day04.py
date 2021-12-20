@@ -10,6 +10,24 @@ def findWinner(boards, truthboards, numbers):
                 return boards[index], truthboards[index], n
     print("no winner :(")
 
+def findLoser(boards, truthboards, numbers):
+    for n in numbers:
+        flagged = []
+        for index, b in enumerate(boards):
+            target_index = np.where(b == n)
+            truthboards[index][target_index] = True
+            winner = np.any(np.all(truthboards[index], axis=0)) or np.any(np.all(truthboards[index], axis=1))
+            if winner:
+                if len(boards) == 1:
+                    return boards[0], truthboards[0], n
+                flagged.append(index)
+        flagged.reverse()
+        for e in flagged:
+            boards.pop(e)
+            truthboards.pop(e)
+        print(f"{len(boards)} boards left")
+
+    print("no winner :(")
 
 if __name__ == "__main__":
     with open("day04/input04.txt") as fp:
@@ -27,7 +45,7 @@ if __name__ == "__main__":
     for i in range(len(boards)):
         truthboards.append(tmp_truthboard.copy())
 
-    a, b, c = findWinner(boards, truthboards, numbers)
+    a, b, c = findLoser(boards, truthboards, numbers)
     print(np.sum(a[~b]) * c)
 
 
