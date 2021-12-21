@@ -15,7 +15,7 @@ def apply_step(algorithm, group, outside: bool):
 
 
 if __name__ == "__main__":
-    with open("day20/input20.txt") as fp:
+    with open("day20/input20-test.txt") as fp:
         lines = fp.read().split("\n")
 
     algo = lines[0]
@@ -28,9 +28,10 @@ if __name__ == "__main__":
     # algo[0] = "#"
     # algo =  "".join(algo)
     # pixels = np.ones(shape=(1,1))
-    newStep = apply_step(algorithm=algo, group=pixels, outside=False)
-    newStep2 = apply_step(algorithm=algo, group=newStep, outside=True)
+    for i in range(25):
+        pixels = apply_step(algorithm=algo, group=pixels, outside=False)
+        pixels = apply_step(algorithm=algo, group=pixels, outside=False)
 
-    print(newStep2.astype(int))
-    print(np.sum(newStep2))
+    # print(pixels.astype(int))
+    print(np.sum(pixels))
 
