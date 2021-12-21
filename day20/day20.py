@@ -1,24 +1,21 @@
 import numpy as np
 
-def apply_step(algorithm, group):
+def apply_step(algorithm, group, outside: bool):
 
-    result = np.pad(group, 1, 'constant', constant_values=False)
-    print(result.astype(int))
+    result = np.pad(group, 2, 'constant', constant_values=outside)
+    return_val = result.copy()
 
-    for i in range(group.shape[0]):
-        for j in range(group.shape[1]):
-            partial = result[i:i+3, j:j+3]
+    for i in range(1, result.shape[0] - 1):
+        for j in range(1, result.shape[1] - 1):
+            partial = result[i-1:i+2, j-1:j+2]
             parsed = int("".join(np.char.mod("%d", partial.flatten())), 2)
-            if i == 0 and j == 0:
-                print(partial.astype(int))
-                print(parsed)
-            result[i+1, j+1] = algorithm[parsed] == "#"
+            return_val[i, j] = algorithm[parsed] == "#"
 
-    return result
+    return return_val[1:-1, 1:-1]
 
 
 if __name__ == "__main__":
-    with open("day20/input20-test.txt") as fp:
+    with open("day20/input20.txt") as fp:
         lines = fp.read().split("\n")
 
     algo = lines[0]
@@ -27,6 +24,13 @@ if __name__ == "__main__":
     for i, line in enumerate(lines[2:]):
         pixels[i, :] = list(map(lambda x: x == "#", list(line)))
 
-    newStep = apply_step(algorithm=algo, group=pixels)
-    print(newStep.astype(int))
+    # algo = ["."]*512
+    # algo[0] = "#"
+    # algo =  "".join(algo)
+    # pixels = np.ones(shape=(1,1))
+    newStep = apply_step(algorithm=algo, group=pixels, outside=False)
+    newStep2 = apply_step(algorithm=algo, group=newStep, outside=True)
+
+    print(newStep2.astype(int))
+    print(np.sum(newStep2))
 
